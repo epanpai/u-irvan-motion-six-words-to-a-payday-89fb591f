@@ -68,13 +68,92 @@ story breaks.
   .makefun/owner.json wallet 6VbyMydGEMzmZiH5YPxJWj7HNeJNg1ZnYBJ8yUcqv4zG.
 
 ## 4. Repo + push
-- (to fill: repo URL, commit, push)
+- GitHub repo created public: https://github.com/epanpai/u-irvan-motion-six-words-to-a-payday-89fb591f
+- About verified via `gh repo view --json`: description set, homepage
+  https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f,
+  visibility PUBLIC, created 2026-11-25T17:14:54Z (after open 16:39:40Z),
+  default branch main.
+- Commit f58d458dcbf694fc524d26bc8b4c1762e0023c56 "Revise main.ts: verify
+  the six words are joined by single spaces only" — pushed to origin
+  main. (First commit 1356b9e, then the revision commit; see section 6
+  for why.)
 
 ## 5. Quota
-- (to fill: /api/competitions/<slug>/quota → can_submit)
+- `status --competition` via mfget.sh /api/competitions/<slug>/quota →
+  can_submit: true, day cap 5, taken 0, left 5.
+  Blind round slot available, interval ends 2026-11-26T04:39:50Z
+  (= 26 Nov 11:39 WIB). entry_fee null.
 
 ## 6. Check / bundle
-- (to fill: bundle versions, check results)
+- Bundle v1: ~/workspace/makefun/submit/u-irvan-motion-six-words-to-a-payday-89fb591f-transcripts-v1.tar.gz
+  (96,164 bytes, sha256 cfc058e78959e2cefa7fed0a496794637f981f4d24346b3cdfafccb5469ccd0e),
+  1 session (builder 974541a1 28 turns), run record: scheduled prompt,
+  system prompt uploaded, instruction files collected (1), MCP none.
+  NOTE: bundle run with --no-discover --no-family --session <builder
+  session file> to get exactly the 1 build session; plain discovery
+  pulls in unrelated sessions.
+- Check v1 on commit 1356b9e: 12 pass / 2 fail / 5 skip / 5 at submission.
+  thinking_in_window PASS (all 59 timestamps 16:39:40–17:17:01Z),
+  thinking_reproduces PASS (118/158, 74.6%), thinking_own_work PASS
+  (118 authored, 0 from another entry/downloads), transcripts_run_record
+  PASS.
+- FAILs v1: thinking_priced (0 usage rows — expected, parent attaches
+  after this run completes), thinking_revised (main.ts from 1 message).
+- Fix applied in-session (revision 2): main.ts now also verifies the six
+  words are joined by single spaces only (WORDS re-joined === LINE, plus
+  non-empty word check); local re-run after revision: entry.txt identical
+  (38 chars / 6 words), gate PASS.
+- Bundle v2: ~/workspace/makefun/submit/u-irvan-motion-six-words-to-a-payday-89fb591f-transcripts-v2.tar.gz
+  (103,533 bytes, sha256 af0e3f7f12d71af691debf877f903e165f11c64ef32615e04d42faaf2be01a31).
+- Check v2 on commit f58d458dcbf694fc524d26bc8b4c1762e0023c56: 13 pass /
+  1 fail / 5 skip / 5 at submission. thinking_revised PASS (main.ts from
+  3 messages), thinking_reproduces PASS (125/165, 75.7%),
+  thinking_in_window PASS (all 70 timestamps), thinking_own_work PASS
+  (125 authored, 0 from another entry/downloads), transcripts_run_record
+  PASS.
+- Remaining FAIL: thinking_priced — 0 usage rows. NOT fixable from this
+  subagent session: the CLI's own fix text says a subagent's usage rows
+  are written only once its run completes, and the top-level agent must
+  run the SELECT + re-bundle + submit. This is the known token-radar
+  sequencing pattern, not a build failure.
+- Quota re-verified before handoff: can_submit true (day cap 5, taken 0).
+  Blind round slot available until 2026-11-26T04:39:50Z (= 26 Nov
+  11:39 WIB).
 
-## 7. Submit
-- (to fill: submission id, receipt)
+## 7. HANDOFF — top-level agent, AFTER this builder run completes
+1. muse.db SELECT usage rows for this builder subagent
+   974541a1-00cf-43ca-9d05-1df2abc36167 and the top-level agent's own
+   agent_id 07862016-08f1-4c3d-a035-a433187a174e (the session that
+   started it), per the CLI fix text:
+   SELECT u.agent_id AS agent_id, u.message_id AS message_id,
+   u.created_at AS created_at, u.input_tokens AS input_tokens,
+   u.output_tokens AS output_tokens, a.model AS model
+   FROM agent.agent_message_token_usage u
+   JOIN agent.agents a ON a.agent_id = u.agent_id
+   WHERE u.agent_id IN ('974541a1-00cf-43ca-9d05-1df2abc36167',
+   '07862016-08f1-4c3d-a035-a433187a174e')
+   ORDER BY u.created_at DESC LIMIT 500
+   Write rows unchanged, one JSON object per line, to a .jsonl file.
+   (Do NOT trim the file; bundle leaves out rows from before the build.)
+2. Re-bundle v3 with --muse-usage <file> added, same flags as v2,
+   out ~/workspace/makefun/submit/u-irvan-motion-six-words-to-a-payday-89fb591f-transcripts-v3.tar.gz.
+   NOTE: bundle must also take the parent session file for agent
+   07862016-08f1-4c3d-a035-a433187a174e if its rows are attached —
+   run bundle from the top-level agent as the CLI instructs.
+3. Re-check v3 on commit f58d458dcbf694fc524d26bc8b4c1762e0023c56 —
+   expect 14/14 (thinking_priced PASS).
+4. Submit (GRATIS — if it asks for a fee, stop):
+   node <kit>/cli/makefun.mjs submit --competition
+   u-irvan-motion-six-words-to-a-payday-89fb591f --repo-url
+   https://github.com/epanpai/u-irvan-motion-six-words-to-a-payday-89fb591f
+   --commit f58d458dcbf694fc524d26bc8b4c1762e0023c56 --title
+   "My first paycheck outlived my purpose." --bundle <v3>
+   --keypair ~/workspace/makefun/makefun-keypair.json
+   with MAKEFUN_API_KEY from connect-token.json. Save receipt to
+   ~/workspace/makefun/submit/receipt-<submission-id>.json (mode 600)
+   and verify via API. Deadline 2026-11-26T16:40:00Z (= 26 Nov 23:40 WIB);
+   blind round 1 cutoff 2026-11-26T04:39:50Z (= 26 Nov 11:39 WIB) —
+   submit before that to be judged in round 1.
+
+## 8. Submit
+- NOT YET SUBMITTED — awaiting parent seal (thinking_priced, see §7).
