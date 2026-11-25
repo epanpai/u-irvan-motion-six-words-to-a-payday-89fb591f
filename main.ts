@@ -45,7 +45,12 @@ const LINE = 'My first paycheck outlived my purpose.';
 // before it ships. This line is 38 characters and 38 bytes, exactly
 // six words.
 const BYTE_LENGTH = Buffer.byteLength(LINE, 'utf8');
-const WORD_COUNT = LINE.trim().split(/\s+/).length;
+const WORDS = LINE.trim().split(/\s+/);
+const WORD_COUNT = WORDS.length;
+// A double space would hide an empty "word" from a naive split, so the
+// word list must also be exactly the line re-joined on single spaces:
+// six words, five single spaces, nothing else between them.
+const SINGLE_SPACED = WORDS.join(' ') === LINE;
 
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
@@ -59,6 +64,8 @@ if (
   LINE.length < 1 ||
   LINE.length > 60 ||
   WORD_COUNT !== 6 ||
+  !SINGLE_SPACED ||
+  WORDS.some((w) => w === '') ||
   BYTE_LENGTH !== LINE.length ||
   LINE.trim() === '' ||
   LINE !== LINE.trim() ||
