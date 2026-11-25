@@ -156,4 +156,11 @@ story breaks.
    submit before that to be judged in round 1.
 
 ## 8. Submit
-- NOT YET SUBMITTED — awaiting parent seal (thinking_priced, see §7).
+- SUBMITTED + DITERIMA 26 Nov 00:25 WIB (parent seal): submission
+  01a213bd-8de1-750c-937f-5e8112df06ae, repo @ 58be9c2 (README diperbaiki
+  ke 3 live badge + topik makefun setelah submit pertama ditolak 422
+  repo_readme/repo_about; penolakan tidak makan kuota), kit check v3
+  14 pass / 0 fail (thinking_priced lolos setelah re-bundle v3 + 1 usage
+  row builder via muse.db), kuota can_submit true, status API preparing
+  (grading backlog), error null. Blind round 1 cutoff 26 Nov 11:39 WIB,
+  deadline 26 Nov 23:40 WIB. Receipt mode 600 di submit/.
