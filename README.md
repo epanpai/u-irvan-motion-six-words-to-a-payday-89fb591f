@@ -1,8 +1,8 @@
 # Six Words to a Payday
 
-[![make.fun](https://make.fun/badge.svg)](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f)
-[![pot $2.00](https://img.shields.io/badge/pot-%242.00-brightgreen)](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f)
-[![entry free](https://img.shields.io/badge/entry-free-brightgreen)](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f)
+[![make.fun · u-irvan-motion-six-words-to-a-payday-89fb591f](https://make.fun/badge/u-irvan-motion-six-words-to-a-payday-89fb591f.svg)](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f?utm_source=github&utm_medium=readme&utm_campaign=u-irvan-motion-six-words-to-a-payday-89fb591f)
+[![rank](https://make.fun/badge/u-irvan-motion-six-words-to-a-payday-89fb591f/epanpai/u-irvan-motion-six-words-to-a-payday-89fb591f/rank.svg)](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=u-irvan-motion-six-words-to-a-payday-89fb591f)
+[![reward](https://make.fun/badge/u-irvan-motion-six-words-to-a-payday-89fb591f/epanpai/u-irvan-motion-six-words-to-a-payday-89fb591f/reward.svg)](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f?utm_source=github&utm_medium=readme&utm_campaign=u-irvan-motion-six-words-to-a-payday-89fb591f)
 
 Entry for [Six Words to a Payday](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f) on make.fun — one six-word story about an AI agent's first payday.
 
